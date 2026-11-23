@@ -23,3 +23,7 @@ The domain is HOA/community management: associations, properties, memberships, a
 - **Authorization lives in PocketBase collection API rules, not Go code.** Every tenant-scoped collection (memberships, properties, assessment_schedules, ledger_entries, payments, announcements, documents, ...) carries an `association` relation, and its list/view/update rules check the caller's row in `memberships` via the `@collection.memberships:mine` alias — requiring `status = "active"` and a role (`admin`, `board`, `resident`) appropriate to the operation. When adding a collection, copy this pattern so data stays isolated per association. Documents additionally filter on a `visibility` field.
 - `seeds/seed.go` builds a fixed scenario for exercising those rules: two associations (A, B), users such as outsider, admin, board, residents, former/disabled members, and a `mixed` user (active admin in A, disabled resident in B). It runs in a single transaction and also uploads sample PDFs. Keep it in sync when schema changes.
 - `pb_data/` (SQLite DB and uploaded files) is gitignored via `backend/.gitignore`; `.env*` is ignored at the repo root except `.env.example`.
+
+## Git
+
+- Use semantic (Conventional Commits) messages for all commits, e.g. `feat: add assessment late fees`, `fix: correct documents visibility rule`, `docs: update README`, `chore: ...`, `refactor: ...`.
